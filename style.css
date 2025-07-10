@@ -44,3 +44,51 @@ td:hover {
     background: #475569;
     transform: scale(1.02);
 }
+
+#timer {
+    display: inline-block;
+    background: #1e293b;
+    border-radius: 5px;
+    padding: 8px 18px;
+    font-size: 1.3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: #38bdf8;
+    margin: 0 10px;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+#minas {
+    display: inline-block;
+    background: #1e293b;
+    border-radius: 5px;
+    padding: 8px 18px;
+    font-size: 1.3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: #f87171;
+    margin: 0 10px;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+#minas, #timer {
+    vertical-align: middle;
+}
+
+#marcadores {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+#minas-label {
+    font-size: 1.1rem;
+    color: #f87171;
+    font-weight: 600;
+    margin-right: 2px;
+    letter-spacing: 1px;
+}
