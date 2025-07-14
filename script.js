@@ -11,12 +11,14 @@ let juegoIniciado = false
 let tablero = [] // Variable global para el tablero
 
 function jugar() {
+  reiniciarVariables()
   generarTablero()
-  ponerMinas()
-  contadorDeMinas()
+  generarTableroJuego()
   eventos()
+  actualizarTablero()
   iniciarTimer()
 }
+
 // Función para iniciar el timer
 function iniciarTimer() {
     if (timer) clearInterval(timer)
@@ -26,6 +28,13 @@ function iniciarTimer() {
         segundos++
         document.getElementById('timer').textContent = segundos.toString().padStart(3, '0')
     }, 1000)
+}
+
+// Función para reiniciar las variables del juego
+function reiniciarVariables() {
+  marcas = 0
+  jugando = true
+  juegoIniciado = false
 }
 
 // Función para generar el tablero HTML
@@ -48,9 +57,6 @@ function generarTablero() {
     tablero.style.background = "slategray" 
     
     iniciarTimer()
-    
-    // Actualizar el contador de minas en el HTML
-    document.getElementById('minas').textContent = minas.toString().padStart(3, '0')
 }
 
 // Función para limpiar el tablero
@@ -72,7 +78,7 @@ function ponerMinas() {
       f = Math.floor(Math.random() * filas) // Genera una fila aleatoria en el tablero
     } while (tablero[c][f]); 
 
-    tablero[c][f] = {valor: -1} //Definimos valor de la celda como -1 para las minas
+    tablero[c][f] = {valor: -1} // Definimos valor de la celda como -1 para las minas
   }
 }
 
@@ -147,6 +153,11 @@ function eventos() {
       celda.addEventListener("mouseup", function(me) {
         click(celda, c, f, me)
       })
+
+      // Evitar menú contextual del clic derecho
+      celda.addEventListener("contextmenu", function(e) {
+        e.preventDefault()
+      })
     }
   }
 }
@@ -196,7 +207,7 @@ function click(celda, c, f, me) {
     default:
       break;
   }
-  refrescarTablero() // Actualizo el tablero
+  actualizarTablero() // Actualizo el tablero
 }
 
 // Funcion para doble click para destapar las celdas que rodean a la celda a la que se le dio doble clic
@@ -205,5 +216,93 @@ function dobleClick(celda, c, f, me) {
     return
   }
   abrirArea(c, f)
-  refrescarTablero() 
+  actualizarTablero() 
+}
+
+// Funcion para actualizar el panel de minas 
+function actualizarPanelMinas() {
+  let panel = document.getElementById("minas")
+  panel.innerHTML = minas - marcas
+}
+
+// Funcion para verificar si el jugador ha ganado, si todas las minas estan marcadas y que las demás estan descubiertas
+function verificarGanador() {
+  for (let f = 0; f < filas; f++) {
+    for (let c = 0; c < columnas; c++) {
+      if (tablero[c][f].estado != `descubierto`) { // Si la mina está descubierta
+        if (tablero[c][f].valor == -1) { // Y si es una mina
+          continue
+        } else { // Si hay una celda cubierta, que no sea una mina, aun no gano
+          return
+        }
+      }
+    }
+  }
+  // Si la comprobacion es exitosa (todas las celdas cubiertas son minas), entonces gano
+  let tableroHTML = document.getElementById("tablero-de-juego")
+  tableroHTML.style.background = "green"
+  jugando = false
+}
+
+// Funcion para verificar si el jugador ha perdido, si descubre una mina
+function verificarPerdedor() {
+  for (let f = 0; f < filas; f++) {
+    for (let c = 0; c < columnas; c++) {
+      if (tablero[c][f].valor == -1) { // Si hay una mina descubierta, entonces perdio
+        if (tablero[c][f].estado == `descubierto`) {
+          let tableroHTML = document.getElementById("tablero-de-juego")
+          tableroHTML.style.background = "red"
+          jugando = false
+        }
+      }
+    }
+  }
+  if (jugando) {
+    return
+  }
+  // Mostrar las demás minas que están ocultas total ya perdio
+  for (let f = 0; f < filas; f++) {
+    for (let c = 0; c < columnas; c++) {
+      if (tablero[c][f].valor == -1) { // Si hay una mina, entonces la muestro
+        let celda = document.getElementById(`celda-${c}-${f}`)
+        celda.innerHTML = `<i class="fas fa-bomb"></i>`
+        celda.style.color = "black"
+      }
+    }
+  }
+}
+
+// Funcion para actualizar el tablero de juego
+function actualizarTablero() {
+  for (let f = 0; f < filas; f++) {
+    for (let c = 0; c < columnas; c++) {
+      let celda = document.getElementById(`celda-${c}-${f}`) 
+      if (tablero[c][f].estado == "descubierto") { // Si la celda esta descubierta
+        celda.style.boxShadow = "none" 
+        switch (tablero[c][f].valor) { 
+          case -1: // Si es una mina
+            celda.innerHTML = `<i class="fas fa-bomb"></i>` // Muestro la mina
+            celda.style.color = "black"
+            celda.style.background = "red"
+            break;
+          case 0: // Si es un 0, no hago nada
+            break
+          default:
+            celda.innerHTML = tablero[c][f].valor // Muestro el valor de la celda
+            break;
+        }
+      }
+      if (tablero[c][f].estado == "marcado") { // Si la celda esta marcada
+        celda.innerHTML = `<i class="fas fa-flag"></i>` // Muestro la bandera
+        celda.style.background = `cadetblue` 
+      }
+      if (tablero[c][f].estado == undefined) { // Si la celda esta vacia
+        celda.innerHTML = ``
+        celda.style.background = ``
+      }
+    }
+  }
+  verificarGanador() 
+  verificarPerdedor() 
+  actualizarPanelMinas()
 }
