@@ -6,6 +6,7 @@
         <title>Busca Minas FM</title>
         <link rel="icon" href="assets/bomb icono.ico"> <!-- Icono de la pagina -->
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     </head>
     <body>
         <span id="juego-nuevo" onclick="jugar()"> Juego Nuevo</span>
@@ -21,6 +22,12 @@
         </span>
         
         <table id="tablero-de-juego"></table>
+        <div id="alerta-perdedor" class="alerta-centrada" style="display:none;">
+            <div class="alerta-contenido">
+                <h2>¡Has perdido!</h2>
+                <button id="btn-reintentar">Reintentar</button>
+            </div>
+        </div>
     </body>
 
     <script src="script.js"></script>

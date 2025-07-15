@@ -199,6 +199,9 @@ function click(celda, c, f, me) {
         marcas-- 
       } 
       else { // Si la celda no está marcada, se marca
+        if (marcas >= minas) {
+          break // No se pueden poner más banderas que minas
+        }
         tablero[c][f].estado = "marcado"
         marcas++
       }
@@ -248,11 +251,32 @@ function verificarGanador() {
 function verificarPerdedor() {
   for (let f = 0; f < filas; f++) {
     for (let c = 0; c < columnas; c++) {
-      if (tablero[c][f].valor == -1) { // Si hay una mina descubierta, entonces perdio
+      if (tablero[c][f].valor == -1) {
         if (tablero[c][f].estado == `descubierto`) {
           let tableroHTML = document.getElementById("tablero-de-juego")
           tableroHTML.style.background = "red"
           jugando = false
+          if (timer) clearInterval(timer)
+          const alerta = document.getElementById('alerta-perdedor')
+          if (alerta) {
+            // Actualizo el contenido de la alerta con el tiempo y banderas
+            const tiempo = segundos.toString().padStart(3, '0')
+            alerta.querySelector('.alerta-contenido').innerHTML = `
+              <h2>¡Has perdido!</h2>
+              <p>⏱️ Tiempo: <strong>${tiempo} s</strong></p>
+              <p>🚩 Banderas puestas: <strong>${marcas}</strong></p>
+              <button id="btn-reintentar">Reintentar</button>
+            `
+            alerta.style.display = 'flex'
+            // Vuelvo a asignar el evento al botón
+            const btnReintentar = document.getElementById('btn-reintentar')
+            if (btnReintentar) {
+              btnReintentar.addEventListener('click', function() {
+                alerta.style.display = 'none'
+                jugar()
+              })
+            }
+          }
         }
       }
     }
@@ -263,10 +287,15 @@ function verificarPerdedor() {
   // Mostrar las demás minas que están ocultas total ya perdio
   for (let f = 0; f < filas; f++) {
     for (let c = 0; c < columnas; c++) {
-      if (tablero[c][f].valor == -1) { // Si hay una mina, entonces la muestro
+      if (tablero[c][f].valor == -1) {
         let celda = document.getElementById(`celda-${c}-${f}`)
-        celda.innerHTML = `<i class="fas fa-bomb"></i>`
-        celda.style.color = "black"
+        if (tablero[c][f].estado !== "descubierto") {
+          celda.innerHTML = `<i class="fas fa-bomb"></i>`
+          celda.style.color = "black"
+        } else {
+          celda.innerHTML = `<i class="fas fa-bomb"></i>`
+          celda.style.color = "black"
+        }
       }
     }
   }
@@ -278,7 +307,9 @@ function actualizarTablero() {
     for (let c = 0; c < columnas; c++) {
       let celda = document.getElementById(`celda-${c}-${f}`) 
       if (tablero[c][f].estado == "descubierto") { // Si la celda esta descubierta
-        celda.style.boxShadow = "none" 
+        celda.style.boxShadow = "none"
+        celda.style.background = "#cfd8dc" // Fondo gris azulado suave para celdas abiertas
+        celda.style.color = "#263238" // Texto oscuro para buena visibilidad
         switch (tablero[c][f].valor) { 
           case -1: // Si es una mina
             celda.innerHTML = `<i class="fas fa-bomb"></i>` // Muestro la mina
@@ -293,8 +324,9 @@ function actualizarTablero() {
         }
       }
       if (tablero[c][f].estado == "marcado") { // Si la celda esta marcada
-        celda.innerHTML = `<i class="fas fa-flag"></i>` // Muestro la bandera
-        celda.style.background = `cadetblue` 
+        celda.innerHTML = `<i class="fas fa-flag"></i>` // Bandera Font Awesome 6+
+        celda.style.background = `cadetblue`
+        celda.style.color = "#fff"
       }
       if (tablero[c][f].estado == undefined) { // Si la celda esta vacia
         celda.innerHTML = ``
@@ -306,3 +338,14 @@ function actualizarTablero() {
   verificarPerdedor() 
   actualizarPanelMinas()
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const alerta = document.getElementById('alerta-perdedor')
+  const btnReintentar = document.getElementById('btn-reintentar')
+  if (btnReintentar) {
+    btnReintentar.addEventListener('click', function() {
+      alerta.style.display = 'none'
+      jugar()
+    })
+  }
+})
