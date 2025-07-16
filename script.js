@@ -1,14 +1,14 @@
 // Variables globales
-let filas = 20
-let columnas = 20
+let filas = 8
+let columnas = 8
 let lado = 30
-let timer = null // Variable para el timer
-let segundos = 0 // Variable para el tiempo
-let minas = filas * columnas * 0.1 // Agarramos el 10% de las celdas para las minas
+let timer = null 
+let segundos = 0 
+let minas = 10
 let marcas = 0 
 let jugando = true 
 let juegoIniciado = false
-let tablero = [] // Variable global para el tablero
+let tablero = [] 
 
 function jugar() {
   reiniciarVariables()
@@ -146,10 +146,6 @@ function eventos() {
     for (let c = 0; c < columnas; c++) {
       let celda = document.getElementById(`celda-${c}-${f}`)
       
-      celda.addEventListener("dblclick", function(me) {
-        dobleClick(celda, c, f, me)
-      })
-      
       celda.addEventListener("mouseup", function(me) {
         click(celda, c, f, me)
       })
@@ -211,15 +207,6 @@ function click(celda, c, f, me) {
       break;
   }
   actualizarTablero() // Actualizo el tablero
-}
-
-// Funcion para doble click para destapar las celdas que rodean a la celda a la que se le dio doble clic
-function dobleClick(celda, c, f, me) {
-  if (!jugando) {
-    return
-  }
-  abrirArea(c, f)
-  actualizarTablero() 
 }
 
 // Funcion para actualizar el panel de minas 
@@ -349,3 +336,52 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   }
 })
+
+// Funciones para el modal de ajustes
+function mostrarAjustes() {
+  document.getElementById('modal-ajustes').style.display = 'block'
+}
+
+function ocultarAjustes() {
+  document.getElementById('modal-ajustes').style.display = 'none'
+}
+
+function seleccionarNivel(nivel) {
+  switch(nivel) {
+    case 'chill':
+      filas = 8
+      columnas = 8
+      minas = 10
+      break
+    case 'peligro':
+      filas = 10
+      columnas = 10
+      minas = 20
+      break
+    case 'minado':
+      filas = 12
+      columnas = 12
+      minas = 34
+      break
+    case 'guerra':
+      filas = 16
+      columnas = 16
+      minas = 60
+      break
+    case 'infierno':
+      filas = 24
+      columnas = 24
+      minas = 99
+      break
+  }
+  ocultarAjustes()
+  jugar()
+}
+
+// Cerrar modal al hacer clic fuera de él
+window.onclick = function(event) {
+  const modal = document.getElementById('modal-ajustes')
+  if (event.target === modal) {
+    ocultarAjustes()
+  }
+}
