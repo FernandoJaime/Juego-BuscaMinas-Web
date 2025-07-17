@@ -5,16 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Busca Minas FM</title>
         <link rel="icon" href="assets/bomb icono.ico"> <!-- Icono de la pagina -->
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="layout.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/layout.css">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
     </head>
     <body>
         <!-- Header -->
         <header class="header">
             <a href="#" class="logo">BuscaMinas FM</a>
             <div class="header-botones">
-                <button class="control-btn" onclick="mostrarAjustes()" title="Ajustes">
+                <button class="control-btn" id="btn-ajustes" title="Ajustes">
                     <i class="fas fa-cog"></i>
                 </button>
                 <button class="control-btn" title="Ver ranking">
@@ -34,7 +35,7 @@
 
         <!-- Contenido principal -->
         <main class="main-container">
-            <span id="juego-nuevo" onclick="jugar()"> Juego Nuevo</span>
+            <span id="juego-nuevo"> Juego Nuevo</span>
             
             <span id="marcadores">
                 <span id="minas-label">Minas:</span>
@@ -50,38 +51,38 @@
                 <div class="modal-contenido">
                     <div class="modal-header">
                         <h2>Seleccionar dificultad</h2>
-                        <span class="cerrar-modal" onclick="ocultarAjustes()">&times;</span>
+                        <span class="cerrar-modal" id="cerrar-modal-ajustes">&times;</span>
                     </div>
                     <div class="niveles-container">
-                        <div class="nivel-opcion" onclick="seleccionarNivel('chill')">
+                        <div class="nivel-opcion" id="nivel-chill">
                             <div class="nivel-icono">😌</div>
                             <div class="nivel-info">
                                 <h3>Nivel 1: Chill</h3>
                                 <p>8x8 - 10 minas</p>
                             </div>
                         </div>
-                        <div class="nivel-opcion" onclick="seleccionarNivel('peligro')">
+                        <div class="nivel-opcion" id="nivel-peligro">
                             <div class="nivel-icono">⚠️</div>
                             <div class="nivel-info">
                                 <h3>Nivel 2: Peligro</h3>
                                 <p>10x10 - 20 minas</p>
                             </div>
                         </div>
-                        <div class="nivel-opcion" onclick="seleccionarNivel('minado')">
+                        <div class="nivel-opcion" id="nivel-minado">
                             <div class="nivel-icono">💣</div>
                             <div class="nivel-info">
                                 <h3>Nivel 3: Minado</h3>
                                 <p>12x12 - 34 minas</p>
                             </div>
                         </div>
-                        <div class="nivel-opcion" onclick="seleccionarNivel('guerra')">
+                        <div class="nivel-opcion" id="nivel-guerra">
                             <div class="nivel-icono">⚔️</div>
                             <div class="nivel-info">
                                 <h3>Nivel 4: Guerra</h3>
                                 <p>16x16 - 60 minas</p>
                             </div>
                         </div>
-                        <div class="nivel-opcion" onclick="seleccionarNivel('infierno')">
+                        <div class="nivel-opcion" id="nivel-infierno">
                             <div class="nivel-icono">🔥</div>
                             <div class="nivel-info">
                                 <h3>Nivel 5: Infierno</h3>
@@ -122,5 +123,5 @@
         </footer>
     </body>
 
-    <script src="script.js"></script>
+    <script src="javascript/script.js"></script>
 </html>

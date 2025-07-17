@@ -1,14 +1,15 @@
 // Variables globales
-let filas = 8
-let columnas = 8
-let lado = 30
-let timer = null 
-let segundos = 0 
-let minas = 10
-let marcas = 0 
-let jugando = true 
-let juegoIniciado = false
-let tablero = [] 
+"use strict";
+var filas = 8
+var columnas = 8
+var lado = 30
+var timer = null 
+var segundos = 0 
+var minas = 10
+var marcas = 0 
+var jugando = true 
+var juegoIniciado = false
+var tablero = [] 
 
 function jugar() {
   reiniciarVariables()
@@ -19,18 +20,20 @@ function jugar() {
   iniciarTimer()
 }
 
+document.getElementById("juego-nuevo").addEventListener("click", jugar)
+
 // Función para iniciar el timer
 function iniciarTimer() {
     if (timer) clearInterval(timer)
     segundos = 0
     document.getElementById('timer').textContent = '000'
-    timer = setInterval(() => {
+    timer = setInterval(function() {
         segundos++
         document.getElementById('timer').textContent = segundos.toString().padStart(3, '0')
     }, 1000)
 }
 
-// Función para reiniciar las variables del juego
+// Función para reiniciar las letiables del juego
 function reiniciarVariables() {
   marcas = 0
   jugando = true
@@ -39,18 +42,18 @@ function reiniciarVariables() {
 
 // Función para generar el tablero HTML
 function generarTablero() {
-    let html = ""
-    for (let f = 0; f < filas; f++) { 
+    var html = ""
+    for (var f = 0; f < filas; f++) { 
       html += `<tr>` 
       // Generación de cada uno de los elementos de la matriz y se les asigna una coordenada
-      for (let c = 0; c < columnas; c++) { 
+      for (var c = 0; c < columnas; c++) { 
         html += `<td id="celda-${c}-${f}" style="width:${lado}px; height:${lado}px">` // Dimensiones de cada celda (ancho y alto)
         html += `</td>`
       }
       html += `</tr>`
     }
     
-    let tablero = document.getElementById("tablero-de-juego")
+    var tablero = document.getElementById("tablero-de-juego")
     tablero.innerHTML = html
     tablero.style.width = columnas * lado + "px" // Ancho del tablero (columnas * lado)
     tablero.style.height = filas * lado + "px" // Alto del tablero (filas * lado)
@@ -62,16 +65,16 @@ function generarTablero() {
 // Función para limpiar el tablero
 function limpiarTablero() {
   tablero = []
-  for (let c = 0; c < columnas; c++) {
+  for (var c = 0; c < columnas; c++) {
     tablero.push([])
   }
 }
 
 // Función para poner las minas en el tablero
 function ponerMinas() {
-  for (let i = 0; i < minas; i++) {
-    let c
-    let f
+  for (var i = 0; i < minas; i++) {
+    var c
+    var f
 
     do {
       c = Math.floor(Math.random() * columnas) // Genera una columna aleatoria en el tablero
@@ -84,14 +87,14 @@ function ponerMinas() {
 
 // Función para contar las minas alrededor de cada celda
 function contadorDeMinas() {
-  for (let f = 0; f < filas; f++) {
-    for (let c = 0; c < columnas; c++) {
+  for (var f = 0; f < filas; f++) {
+    for (var c = 0; c < columnas; c++) {
       if (!tablero[c][f]) 
       {
-        let contador = 0
+        var contador = 0
         // Se recorren celdas alrededor de la celda actual
-        for (let i = -1; i <= 1; i++) { 
-          for (let j = -1; j <= 1; j++) { 
+        for (var i = -1; i <= 1; i++) { 
+          for (var j = -1; j <= 1; j++) { 
             if (i == 0 && j == 0) { // Si la celda es la misma, se salta
               continue
             }
@@ -119,8 +122,8 @@ function generarTableroJuego() {
 
 // Funcion para abrir las celdas que rodean a la celda a la que se le dio click
 function abrirArea(c, f) {
-  for (let i = -1; i <= 1; i++) { 
-    for (let j = -1; j <= 1; j++) { 
+  for (var i = -1; i <= 1; i++) { 
+    for (var j = -1; j <= 1; j++) { 
       if (i == 0 && j == 0) {
         continue // Para evitar que se encierre en un bucle infinito
       }
@@ -140,26 +143,29 @@ function abrirArea(c, f) {
   }
 }
 
-// Funcion para añadir los eventos a cada una de las celdas
-function eventos() {
-  for (let f = 0; f < filas; f++) {
-    for (let c = 0; c < columnas; c++) {
-      let celda = document.getElementById(`celda-${c}-${f}`)
-      
-      celda.addEventListener("mouseup", function(me) {
-        click(celda, c, f, me)
-      })
+function asignarEventos(c, f) {
+  var celda = document.getElementById(`celda-${c}-${f}`)
+  
+  celda.addEventListener("mouseup", function(me) {
+    click(c, f, me)
+  })
 
-      // Evitar menú contextual del clic derecho
-      celda.addEventListener("contextmenu", function(e) {
-        e.preventDefault()
-      })
+  celda.addEventListener("contextmenu", function(e) {
+    e.preventDefault()
+  })
+}
+
+function eventos() {
+  for (var f = 0; f < filas; f++) {
+    for (var c = 0; c < columnas; c++) {
+      asignarEventos(c, f)
     }
   }
 }
 
+
 // Funcion clic derecho y izquierdo para descubrir las celdas, o marcarlas con bandera
-function click(celda, c, f, me) {
+function click(c, f, me) {
   if (!jugando) {  
     return 
   }
@@ -211,14 +217,14 @@ function click(celda, c, f, me) {
 
 // Funcion para actualizar el panel de minas 
 function actualizarPanelMinas() {
-  let panel = document.getElementById("minas")
+  var panel = document.getElementById("minas")
   panel.innerHTML = minas - marcas
 }
 
 // Funcion para verificar si el jugador ha ganado, si todas las minas estan marcadas y que las demás estan descubiertas
 function verificarGanador() {
-  for (let f = 0; f < filas; f++) {
-    for (let c = 0; c < columnas; c++) {
+  for (var f = 0; f < filas; f++) {
+    for (var c = 0; c < columnas; c++) {
       if (tablero[c][f].estado != `descubierto`) { // Si la mina está descubierta
         if (tablero[c][f].valor == -1) { // Y si es una mina
           continue
@@ -229,18 +235,18 @@ function verificarGanador() {
     }
   }
   // Si la comprobacion es exitosa (todas las celdas cubiertas son minas), entonces gano
-  let tableroHTML = document.getElementById("tablero-de-juego")
+  var tableroHTML = document.getElementById("tablero-de-juego")
   tableroHTML.style.background = "green"
   jugando = false
 }
 
 // Funcion para verificar si el jugador ha perdido, si descubre una mina
 function verificarPerdedor() {
-  for (let f = 0; f < filas; f++) {
-    for (let c = 0; c < columnas; c++) {
+  for (var f = 0; f < filas; f++) {
+    for (var c = 0; c < columnas; c++) {
       if (tablero[c][f].valor == -1) {
         if (tablero[c][f].estado == `descubierto`) {
-          let tableroHTML = document.getElementById("tablero-de-juego")
+          var tableroHTML = document.getElementById("tablero-de-juego")
           tableroHTML.style.background = "red"
           jugando = false
           if (timer) clearInterval(timer)
@@ -272,10 +278,10 @@ function verificarPerdedor() {
     return
   }
   // Mostrar las demás minas que están ocultas total ya perdio
-  for (let f = 0; f < filas; f++) {
-    for (let c = 0; c < columnas; c++) {
+  for (var f = 0; f < filas; f++) {
+    for (var c = 0; c < columnas; c++) {
       if (tablero[c][f].valor == -1) {
-        let celda = document.getElementById(`celda-${c}-${f}`)
+        var celda = document.getElementById(`celda-${c}-${f}`)
         if (tablero[c][f].estado !== "descubierto") {
           celda.innerHTML = `<i class="fas fa-bomb"></i>`
           celda.style.color = "black"
@@ -290,9 +296,9 @@ function verificarPerdedor() {
 
 // Funcion para actualizar el tablero de juego
 function actualizarTablero() {
-  for (let f = 0; f < filas; f++) {
-    for (let c = 0; c < columnas; c++) {
-      let celda = document.getElementById(`celda-${c}-${f}`) 
+  for (var f = 0; f < filas; f++) {
+    for (var c = 0; c < columnas; c++) {
+      var celda = document.getElementById(`celda-${c}-${f}`) 
       if (tablero[c][f].estado == "descubierto") { // Si la celda esta descubierta
         celda.style.boxShadow = "none"
         celda.style.background = "#cfd8dc" // Fondo gris azulado suave para celdas abiertas
@@ -342,9 +348,21 @@ function mostrarAjustes() {
   document.getElementById('modal-ajustes').style.display = 'block'
 }
 
+document.getElementById('btn-ajustes').addEventListener('click', mostrarAjustes)
+
+// Cerrar modal al hacer clic fuera de él
+window.onclick = function(event) {
+  const modal = document.getElementById('modal-ajustes')
+  if (event.target === modal) {
+    ocultarAjustes()
+  }
+}
+
 function ocultarAjustes() {
   document.getElementById('modal-ajustes').style.display = 'none'
 }
+
+document.getElementById('cerrar-modal-ajustes').addEventListener('click', ocultarAjustes)
 
 function seleccionarNivel(nivel) {
   switch(nivel) {
@@ -378,10 +396,18 @@ function seleccionarNivel(nivel) {
   jugar()
 }
 
-// Cerrar modal al hacer clic fuera de él
-window.onclick = function(event) {
-  const modal = document.getElementById('modal-ajustes')
-  if (event.target === modal) {
-    ocultarAjustes()
-  }
-}
+document.getElementById('nivel-chill').addEventListener('click', function() {
+  seleccionarNivel('chill')
+});
+document.getElementById('nivel-peligro').addEventListener('click', function() {
+  seleccionarNivel('peligro')
+});
+document.getElementById('nivel-minado').addEventListener('click', function() {
+  seleccionarNivel('minado')
+});
+document.getElementById('nivel-guerra').addEventListener('click', function() {
+  seleccionarNivel('guerra')
+});
+document.getElementById('nivel-infierno').addEventListener('click', function() {
+  seleccionarNivel('infierno')
+});
