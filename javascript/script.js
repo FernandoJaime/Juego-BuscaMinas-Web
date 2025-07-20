@@ -10,6 +10,7 @@ var marcas = 0
 var jugando = true 
 var juegoIniciado = false
 var tablero = [] 
+var nombreJugador = ''
 
 function jugar() {
   reiniciarVariables()
@@ -238,6 +239,30 @@ function verificarGanador() {
   var tableroHTML = document.getElementById("tablero-de-juego")
   tableroHTML.style.background = "green"
   jugando = false
+  // Guardar en ranking con nivel y fecha
+  const tiempo = segundos.toString().padStart(3, '0')
+  guardarEnRanking(nombreJugador, segundos, obtenerNombreNivel())
+  // Mostrar mensaje de victoria con el nombre
+  const alerta = document.getElementById('alerta-perdedor')
+  if (alerta) {
+    alerta.classList.remove('derrota')
+    alerta.classList.add('victoria')
+    alerta.classList.remove('alerta-oculta')
+    alerta.querySelector('.alerta-contenido').innerHTML = `
+      <h2>¡Felicidades, ${nombreJugador}!</h2>
+      <p>¡Has ganado!</p>
+      <p>⏱️ Tiempo: <strong>${tiempo} s</strong></p>
+      <p>🚩 Banderas puestas: <strong>${marcas}</strong></p>
+      <button id="btn-reintentar">Jugar de nuevo</button>
+    `
+    const btnReintentar = document.getElementById('btn-reintentar')
+    if (btnReintentar) {
+      btnReintentar.addEventListener('click', function() {
+        alerta.classList.add('alerta-oculta')
+        jugar()
+      })
+    }
+  }
 }
 
 // Funcion para verificar si el jugador ha perdido, si descubre una mina
@@ -252,23 +277,25 @@ function verificarPerdedor() {
           if (timer) clearInterval(timer)
           const alerta = document.getElementById('alerta-perdedor')
           if (alerta) {
-            // Actualizo el contenido de la alerta con el tiempo y banderas
+            alerta.classList.remove('victoria')
+            alerta.classList.add('derrota')
             const tiempo = segundos.toString().padStart(3, '0')
             alerta.querySelector('.alerta-contenido').innerHTML = `
-              <h2>¡Has perdido!</h2>
+              <h2>¡${nombreJugador}, has perdido!</h2>
               <p>⏱️ Tiempo: <strong>${tiempo} s</strong></p>
               <p>🚩 Banderas puestas: <strong>${marcas}</strong></p>
               <button id="btn-reintentar">Reintentar</button>
             `
-            alerta.style.display = 'flex'
-            // Vuelvo a asignar el evento al botón
-            const btnReintentar = document.getElementById('btn-reintentar')
-            if (btnReintentar) {
-              btnReintentar.addEventListener('click', function() {
-                alerta.style.display = 'none'
-                jugar()
-              })
-            }
+            setTimeout(function() {
+              alerta.classList.remove('alerta-oculta')
+              const btnReintentar = document.getElementById('btn-reintentar')
+              if (btnReintentar) {
+                btnReintentar.addEventListener('click', function() {
+                  alerta.classList.add('alerta-oculta')
+                  jugar()
+                })
+              }
+            }, 1000) // 1 segundo de delay para que el usuario pueda ver las minas
           }
         }
       }
@@ -332,12 +359,52 @@ function actualizarTablero() {
   actualizarPanelMinas()
 }
 
+// Lógica para el modal de nombre
+window.addEventListener('DOMContentLoaded', function() {
+  const modalNombre = document.getElementById('modal-nombre')
+  const inputNombre = document.getElementById('input-nombre')
+  const btnConfirmarNombre = document.getElementById('btn-confirmar-nombre')
+  const nombreError = document.getElementById('nombre-error')
+
+  // Bloquear el juego hasta que se ingrese un nombre válido
+  function validarNombre(nombre) {
+    return nombre && nombre.trim().length >= 3
+  }
+
+  btnConfirmarNombre.addEventListener('click', function() {
+    const nombre = inputNombre.value.trim()
+    if (validarNombre(nombre)) {
+      nombreJugador = nombre
+      modalNombre.classList.remove('modal-nombre-inicial')
+      modalNombre.classList.add('modal-ranking')
+      nombreError.classList.add('modal-nombre-error')
+      jugar() // Iniciar el juego automáticamente
+    } else {
+      nombreError.classList.remove('modal-nombre-error')
+    }
+  })
+
+  inputNombre.addEventListener('input', function() {
+    if (validarNombre(inputNombre.value)) {
+      nombreError.classList.add('modal-nombre-error')
+    }
+  })
+
+  // Evitar que se cierre el modal con Escape o clic fuera
+  modalNombre.addEventListener('click', function(e) {
+    if (e.target === modalNombre) {
+      inputNombre.focus()
+    }
+  })
+  inputNombre.focus()
+})
+
 document.addEventListener('DOMContentLoaded', function() {
   const alerta = document.getElementById('alerta-perdedor')
   const btnReintentar = document.getElementById('btn-reintentar')
   if (btnReintentar) {
     btnReintentar.addEventListener('click', function() {
-      alerta.style.display = 'none'
+      alerta.classList.add('alerta-oculta')
       jugar()
     })
   }
@@ -411,3 +478,55 @@ document.getElementById('nivel-guerra').addEventListener('click', function() {
 document.getElementById('nivel-infierno').addEventListener('click', function() {
   seleccionarNivel('infierno')
 });
+
+// Funcion para devolver nivel que se juega (Para ranking)
+function obtenerNombreNivel() {
+  if (filas === 8 && columnas === 8 && minas === 10) return 'Chill';
+  if (filas === 10 && columnas === 10 && minas === 20) return 'Peligro';
+  if (filas === 12 && columnas === 12 && minas === 34) return 'Minado';
+  if (filas === 16 && columnas === 16 && minas === 60) return 'Guerra';
+  if (filas === 24 && columnas === 24 && minas === 99) return 'Infierno';
+  return 'Personalizado';
+}
+
+// Guardar partida ganada en el ranking (ahora con fecha y nivel)
+function guardarEnRanking(nombre, tiempo, nivel) {
+  let ranking = JSON.parse(localStorage.getItem('buscaminas_ranking') || '[]')
+  const fecha = new Date().toLocaleDateString()
+  ranking.push({ nombre, tiempo: Number(tiempo), nivel, fecha }) //Guardamos el ranking en el localStorage
+  ranking = ranking.filter(r => r.nombre && r.tiempo > 0) //Validación para evitar errores inesperados o partidas sin tiempo
+  ranking.sort((a, b) => a.tiempo - b.tiempo) //Ordenamos el ranking por tiempo
+  localStorage.setItem('buscaminas_ranking', JSON.stringify(ranking))
+}
+
+// Mostrar el ranking en el modal (Nombre, Nivel, Fecha, Tiempo)
+function mostrarRanking() {
+  const modal = document.getElementById('modal-ranking')
+  const tbody = document.querySelector('#tabla-ranking tbody')
+  const rankingVacio = document.getElementById('ranking-vacio')
+  let ranking = JSON.parse(localStorage.getItem('buscaminas_ranking') || '[]') //Obtenemos el ranking del localStorage
+  tbody.innerHTML = ''
+  if (ranking.length === 0) {
+    rankingVacio.classList.remove('ranking-vacio') //Si no hay ranking, mostramos el mensaje de que no hay partidas ganadas
+    return
+  } else {
+    rankingVacio.classList.add('ranking-vacio') //Si hay ranking, ocultamos el mensaje
+  }
+  ranking.forEach((item, idx) => {
+    const tr = document.createElement('tr')
+    tr.innerHTML = `<td>${idx + 1}</td><td>${item.nombre}</td><td>${item.nivel || ''}</td><td>${item.fecha || ''}</td><td>${item.tiempo}</td>`
+    tbody.appendChild(tr)
+  })
+}
+
+// Evento para abrir/cerrar el ranking
+const btnRanking = document.querySelector('.fa-trophy').closest('button') //Obtenemos elemento
+btnRanking.addEventListener('click', function() {
+  mostrarRanking()
+  document.getElementById('modal-ranking').classList.remove('modal-ranking')
+  document.getElementById('modal-ranking').classList.add('modal-nombre-inicial')
+})
+document.getElementById('cerrar-modal-ranking').addEventListener('click', function() {
+  document.getElementById('modal-ranking').classList.remove('modal-nombre-inicial')
+  document.getElementById('modal-ranking').classList.add('modal-ranking')
+})

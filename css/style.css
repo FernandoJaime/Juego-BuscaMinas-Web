@@ -300,3 +300,116 @@ td:hover {
 .niveles-container::-webkit-scrollbar-thumb:hover {
     background: #64748b;
 }
+
+
+.modal-nombre {
+  position: fixed;
+  z-index: 1002;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(44, 62, 80, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-nombre-contenido {
+  background: #263238;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #0005;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 240px;
+  color: #eceff1;
+}
+.modal-nombre-contenido h2 { margin-bottom: 10px; font-size: 1.3em; }
+.modal-nombre-contenido input {
+  background: #37474f;
+  color: #eceff1;
+  border: 1px solid #90a4ae;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 1em;
+  width: 170px;
+  text-align: center;
+  margin-bottom: 7px;
+  outline: none;
+  transition: border 0.2s;
+}
+.modal-nombre-contenido input:focus {
+  border: 1.5px solid #00bcd4;
+  background: #455a64;
+}
+.modal-nombre-contenido button {
+  margin-top: 7px;
+  padding: 7px 18px;
+  border-radius: 8px;
+  background: #00bcd4;
+  color: #fff;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px #0002;
+  transition: background 0.2s;
+}
+.modal-nombre-contenido button:hover { background: #008ba3; }
+
+.modal-nombre-inicial { display: flex; }
+.modal-nombre-titulo { margin-bottom: 10px; font-size: 1.3em; }
+.modal-nombre-entrada { padding: 7px 12px; border-radius: 8px; border: 1px solid #b0bec5; font-size: 1em; width: 170px; text-align: center; margin-bottom: 7px; outline: none; }
+.modal-nombre-error { color: #e53935; font-size: 0.95em; margin-bottom: 5px; display: none; }
+.modal-nombre-boton { margin-top: 7px; padding: 7px 18px; border-radius: 8px; background: #263238; color: #fff; border: none; font-size: 1em; cursor: pointer; box-shadow: 0 2px 6px #0002; }
+
+/* Modal de ranking */
+.modal-ranking { display: none; }
+.modal-ranking-contenido { max-width: 350px; }
+.modal-ranking-contenedor { flex-direction: column; align-items: center; }
+.tabla-ranking-contenedor { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.tabla-ranking-encabezado { background: #eceff1; }
+.tabla-ranking-th { padding: 6px; }
+.tabla-ranking-th-primera { border-radius: 6px 0 0 6px; }
+.tabla-ranking-th-ultima { border-radius: 0 6px 6px 0; }
+.ranking-vacio { color: #888; font-size: 0.98em; margin-top: 10px; display: none; }
+
+#tabla-ranking {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px #0003;
+}
+#tabla-ranking th {
+  color: #eceff1;
+  font-weight: 600;
+  background: #37474f;
+  text-align: center;
+  font-size: 1em;
+  padding: 6px 0;
+  border: none;
+}
+#tabla-ranking th:first-child { border-top-left-radius: 10px; }
+#tabla-ranking th:last-child { border-top-right-radius: 10px; }
+#tabla-ranking td {
+  color: #cfd8dc;
+  background: #263238;
+  text-align: center;
+  font-size: 1em;
+  padding: 6px 0;
+  border: none;
+}
+#tabla-ranking tbody tr:nth-child(even)  td { background: #2e3a43; } 
+#tabla-ranking tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+#tabla-ranking tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+/* Modal de alerta de victoria y derrota */
+.alerta-centrada.victoria .alerta-contenido {
+  background: #2e7d32;
+  color: #fff;
+  border: 2px solid #43a047;
+}
+.alerta-centrada.derrota .alerta-contenido {
+  background: #b71c1c;
+  color: #fff;
+  border: 2px solid #e53935;
+}
+
+
+.alerta-oculta { display: none; }

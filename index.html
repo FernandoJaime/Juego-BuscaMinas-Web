@@ -93,7 +93,44 @@
                 </div>
             </div>
             
-            <div id="alerta-perdedor" class="alerta-centrada" style="display:none;">
+            <!-- Modal de nombre de jugador (más compacto y estilizado) -->
+            <div id="modal-nombre" class="modal-nombre modal-nombre-inicial">
+                <div class="modal-nombre-contenido">
+                    <h2 class="modal-nombre-titulo">Nombre</h2>
+                    <input id="input-nombre" type="text" minlength="3" maxlength="20" placeholder="Nombre..." class="modal-nombre-entrada">
+                    <span id="nombre-error" class="modal-nombre-error">Mínimo 3 letras.</span>
+                    <button id="btn-confirmar-nombre" class="modal-nombre-boton">Entrar</button>
+                </div>
+            </div>
+
+            <!-- Modal de ranking -->
+            <div id="modal-ranking" class="modal-ajustes modal-ranking">
+                <div class="modal-contenido modal-ranking-contenido">
+                    <div class="modal-header">
+                        <h2>Ranking</h2>
+                        <span class="cerrar-modal" id="cerrar-modal-ranking">&times;</span>
+                    </div>
+                    <div class="niveles-container modal-ranking-contenedor">
+                        <table id="tabla-ranking" class="tabla-ranking-contenedor">
+                            <thead>
+                                <tr class="tabla-ranking-encabezado">
+                                    <th class="tabla-ranking-th tabla-ranking-th-primera">#</th>
+                                    <th class="tabla-ranking-th">Nombre</th>
+                                    <th class="tabla-ranking-th">Nivel</th>
+                                    <th class="tabla-ranking-th">Fecha</th>
+                                    <th class="tabla-ranking-th tabla-ranking-th-ultima">Tiempo (s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Acá lo vamos a generar de manera dinámica dependiendo los ganadores -->
+                            </tbody>
+                        </table>
+                        <span id="ranking-vacio" class="ranking-vacio">Sin partidas ganadas aún.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="alerta-perdedor" class="alerta-centrada alerta-oculta">
                 <div class="alerta-contenido">
                     <h2>¡Has perdido!</h2>
                     <button id="btn-reintentar">Reintentar</button>
