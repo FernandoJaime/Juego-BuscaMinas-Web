@@ -5,9 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Busca Minas FM</title>
         <link rel="icon" href="assets/bomb icono.ico"> <!-- Icono de la pagina -->
+        <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/layout.css">
-        <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
     </head>
     <body>
@@ -27,7 +27,7 @@
                 <button class="control-btn" title="Activar/Desactivar sonido">
                     <i class="fas fa-volume-up"></i>
                 </button>
-                <button class="control-btn" title="Contacto">
+                <button class="control-btn" id="btn-contacto" title="Contacto">
                     <i class="fas fa-envelope"></i>
                 </button>
             </div>
@@ -58,35 +58,35 @@
                             <div class="nivel-icono">😌</div>
                             <div class="nivel-info">
                                 <h3>Nivel 1: Chill</h3>
-                                <p>8x8 - 10 minas</p>
+                                <p>8x8 - 10 minas - 100 puntos</p>
                             </div>
                         </div>
                         <div class="nivel-opcion" id="nivel-peligro">
                             <div class="nivel-icono">⚠️</div>
                             <div class="nivel-info">
                                 <h3>Nivel 2: Peligro</h3>
-                                <p>10x10 - 20 minas</p>
+                                <p>10x10 - 20 minas - 200 puntos</p>
                             </div>
                         </div>
                         <div class="nivel-opcion" id="nivel-minado">
                             <div class="nivel-icono">💣</div>
                             <div class="nivel-info">
                                 <h3>Nivel 3: Minado</h3>
-                                <p>12x12 - 34 minas</p>
+                                <p>12x12 - 34 minas - 300 puntos</p>
                             </div>
                         </div>
                         <div class="nivel-opcion" id="nivel-guerra">
                             <div class="nivel-icono">⚔️</div>
                             <div class="nivel-info">
                                 <h3>Nivel 4: Guerra</h3>
-                                <p>16x16 - 60 minas</p>
+                                <p>16x16 - 60 minas - 400 puntos</p>
                             </div>
                         </div>
                         <div class="nivel-opcion" id="nivel-infierno">
                             <div class="nivel-icono">🔥</div>
                             <div class="nivel-info">
                                 <h3>Nivel 5: Infierno</h3>
-                                <p>24x24 - 99 minas</p>
+                                <p>24x24 - 99 minas - 500 puntos</p>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
             <!-- Modal de nombre de jugador (más compacto y estilizado) -->
             <div id="modal-nombre" class="modal-nombre modal-nombre-inicial">
                 <div class="modal-nombre-contenido">
-                    <h2 class="modal-nombre-titulo">Nombre</h2>
+                    <h2 class="modal-nombre-titulo">Nombre de jugador</h2>
                     <input id="input-nombre" type="text" minlength="3" maxlength="20" placeholder="Nombre..." class="modal-nombre-entrada">
                     <span id="nombre-error" class="modal-nombre-error">Mínimo 3 letras.</span>
                     <button id="btn-confirmar-nombre" class="modal-nombre-boton">Entrar</button>
@@ -158,7 +158,8 @@
                 </a>
             </div>
         </footer>
-    </body>
 
-    <script src="javascript/script.js"></script>
+        <script src="./javascript/juego.js"></script>
+        <script src="./javascript/general.js"></script>
+    </body>
 </html>
