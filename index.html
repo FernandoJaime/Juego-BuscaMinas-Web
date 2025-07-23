@@ -18,9 +18,9 @@
                 <button class="control-btn" id="btn-ajustes" title="Ajustes">
                     <i class="fas fa-cog"></i>
                 </button>
-                <button class="control-btn" title="Ver ranking">
+                 <button class="control-btn" title="Ver ranking">
                     <i class="fas fa-trophy"></i>
-                </button>
+                </button> 
                 <button class="control-btn" title="Cambiar tema">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -45,6 +45,45 @@
             </span>
             
             <table id="tablero-de-juego"></table>
+            
+ 
+          <!-- Modal de ranking -->
+<div id="modal-ranking" class="modal-ranking-oculto">
+    <div class="modal-ranking-contenido">
+      <div class="modal-ranking-header">
+        <h2>Ranking</h2>
+        <button id="cerrar-modal-ranking" class="cerrar-modal-ranking">&times;</button>
+      </div>
+  <!-- Filtros de ranking -->
+      <div class="filtros-ranking">
+        <label for="filtro-selector">Ordenar por:</label>
+        <select id="filtro-selector">
+          <option value="puntaje-desc">Puntaje (mayor a menor)</option>
+          <option value="puntaje-asc">Puntaje (menor a mayor)</option>
+          <option value="fecha-desc">Fecha (más reciente)</option>
+          <option value="fecha-asc">Fecha (más antigua)</option>
+        </select>
+      </div>
+  
+      <table id="tabla-ranking">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Puntos</th>
+            <th>Tiempo</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Inserción de filas dinámicamente -->
+        </tbody>
+      </table>
+      
+      <span id="ranking-vacio" class="ranking-vacio">Sin partidas ganadas aún.</span>
+    </div>
+  </div>
+  
             
             <!-- Modal de ajustes oculto -->
             <div id="modal-ajustes" class="modal-ajustes">
@@ -102,34 +141,6 @@
                     <button id="btn-confirmar-nombre" class="modal-nombre-boton">Entrar</button>
                 </div>
             </div>
-
-            <!-- Modal de ranking -->
-            <div id="modal-ranking" class="modal-ajustes modal-ranking">
-                <div class="modal-contenido modal-ranking-contenido">
-                    <div class="modal-header">
-                        <h2>Ranking</h2>
-                        <span class="cerrar-modal" id="cerrar-modal-ranking">&times;</span>
-                    </div>
-                    <div class="niveles-container modal-ranking-contenedor">
-                        <table id="tabla-ranking" class="tabla-ranking-contenedor">
-                            <thead>
-                                <tr class="tabla-ranking-encabezado">
-                                    <th class="tabla-ranking-th tabla-ranking-th-primera">#</th>
-                                    <th class="tabla-ranking-th">Nombre</th>
-                                    <th class="tabla-ranking-th">Nivel</th>
-                                    <th class="tabla-ranking-th">Fecha</th>
-                                    <th class="tabla-ranking-th tabla-ranking-th-ultima">Tiempo (s)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Acá lo vamos a generar de manera dinámica dependiendo los ganadores -->
-                            </tbody>
-                        </table>
-                        <span id="ranking-vacio" class="ranking-vacio">Sin partidas ganadas aún.</span>
-                    </div>
-                </div>
-            </div>
-            
             <div id="alerta-perdedor" class="alerta-centrada alerta-oculta">
                 <div class="alerta-contenido">
                     <h2>¡Has perdido!</h2>
