@@ -12,6 +12,13 @@ var juegoIniciado = false
 var tablero = []
 var nombreJugador = ''
 
+// Variables de sonidos
+let sonido_click = new Audio("assets/sonido_click.mp3")
+let sonido_descubrir = new Audio("assets/sonido_descubrir.mp3")
+let sonido_perdedor = new Audio("assets/sonido_perdedor.mp3")
+let sonido_ganador = new Audio("assets/sonido_ganador.mp3")
+let sonido_bandera = new Audio("assets/sonido_bandera.mp3")
+
 function jugar() {
     reiniciarVariables()
     generarTablero()
@@ -35,7 +42,7 @@ function iniciarTimer() {
     }, 1000)
 }
 
-// Función para reiniciar las letiables del juego
+// Función para reiniciar las variables del juego
 function reiniciarVariables() {
     marcas = 0
     jugando = true
@@ -60,7 +67,6 @@ function generarTablero() {
     tablero.style.width = columnas * lado + "px" // Ancho del tablero (columnas * lado)
     tablero.style.height = filas * lado + "px" // Alto del tablero (filas * lado)
     tablero.style.background = "slategray"
-
     iniciarTimer()
 }
 
@@ -77,11 +83,10 @@ function ponerMinas() {
     for (var i = 0; i < minas; i++) {
         var c
         var f
-
         do {
-            c = Math.floor(Math.random() * columnas) // Genera una columna aleatoria en el tablero
-            f = Math.floor(Math.random() * filas) // Genera una fila aleatoria en el tablero
-        } while (tablero[c][f]);
+            c = Math.floor(Math.random() * columnas) // Selecciona columna aleatoria
+            f = Math.floor(Math.random() * filas) // Selecciona fila aleatoria
+        } while (tablero[c][f]); //Chequear que ya no exista una mina en esa posición
 
         tablero[c][f] = { valor: -1 } // Definimos valor de la celda como -1 para las minas
     }
@@ -96,11 +101,11 @@ function contadorDeMinas() {
                 // Se recorren celdas alrededor de la celda actual
                 for (var i = -1; i <= 1; i++) {
                     for (var j = -1; j <= 1; j++) {
-                        if (i == 0 && j == 0) { // Si la celda es la misma, se salta
+                        if (i === 0 && j === 0) { // Si la celda es la misma, se salta
                             continue
                         }
                         try {
-                            if (tablero[c + i][f + j].valor == -1) { // Si la celda tiene una mina, se incrementa el contador
+                            if (tablero[c + i][f + j].valor === -1) { // Si la celda tiene una mina, se incrementa el contador
                                 contador++
                             }
                         } catch (e) { }
@@ -127,7 +132,7 @@ function eventos() {
             asignarEventos(c, f)
         }
     }
-} 
+}
 //Lógica para obtener el nombre del nivel
 function obtenerNombreNivel() {
     if (filas === 8 && columnas === 8 && minas === 10) return 'Chill';
@@ -159,21 +164,21 @@ function verificarGanador() {
         var tableroHTML = document.getElementById("tablero-de-juego");
         tableroHTML.style.background = "#2ecc71";
         jugando = false;
+        sonido_ganador.play();
         if (timer) clearInterval(timer);
         guardarEnRanking(nombreJugador, segundos, obtenerNombreNivel());
         var alerta = document.getElementById('alerta-perdedor');
         if (alerta) {
-            alerta.classList.remove('derrota');
-            alerta.classList.add('victoria');
+            alerta.classList.remove('derrota'); //Sacamos derrota de el nombre de la clase
+            alerta.classList.add('victoria'); //Anexamos victoria, generando estilo dinámico
             alerta.querySelector('.alerta-contenido').innerHTML = `
-            <h2>¡Felicidades, ${nombreJugador}!</h2>
-            <p>¡Has ganado!</p>
-            <p>⏱️ Tiempo: <strong>${segundos.toString().padStart(3, '0')} s</strong></p>
-            <p>🚩 Banderas puestas: <strong>${marcas}</strong></p>
-            <button id="btn-reintentar">Jugar de nuevo</button>
-            `;
+                <h2>¡Felicidades, ${nombreJugador}!</h2>
+                <p>¡Has ganado!</p>
+                <p>⏱️ Tiempo: <strong>${segundos.toString().padStart(3, '0')} s</strong></p>
+                <p>🚩 Banderas puestas: <strong>${marcas}</strong></p>
+                <button id="btn-reintentar">Jugar de nuevo</button>`;
             var btnReintentar = document.getElementById('btn-reintentar');
-            var btnReintentarClone = btnReintentar.cloneNode(true);
+            var btnReintentarClone = btnReintentar.cloneNode(true); //Evitamos acumulaciones de eventos en el botón
             btnReintentar.parentNode.replaceChild(btnReintentarClone, btnReintentar);
             btnReintentarClone.addEventListener('click', function () {
                 alerta.classList.add('alerta-oculta');
@@ -188,11 +193,12 @@ function verificarGanador() {
 function verificarPerdedor() {
     for (var f = 0; f < filas; f++) {
         for (var c = 0; c < columnas; c++) {
-            if (tablero[c][f].valor == -1) {
-                if (tablero[c][f].estado == `descubierto`) {
+            if (tablero[c][f].valor === -1) {
+                if (tablero[c][f].estado === `descubierto`) {
                     var tableroHTML = document.getElementById("tablero-de-juego")
                     tableroHTML.style.background = "red"
                     jugando = false
+                    sonido_perdedor.play()
                     if (timer) clearInterval(timer)
                     const alerta = document.getElementById('alerta-perdedor')
                     if (alerta) {
@@ -200,11 +206,10 @@ function verificarPerdedor() {
                         alerta.classList.add('derrota')
                         const tiempo = segundos.toString().padStart(3, '0')
                         alerta.querySelector('.alerta-contenido').innerHTML = `
-                <h2>¡${nombreJugador}, has perdido!</h2>
-                <p>⏱️ Tiempo: <strong>${tiempo} s</strong></p>
-                <p>🚩 Banderas puestas: <strong>${marcas}</strong></p>
-                <button id="btn-reintentar">Reintentar</button>
-              `
+                            <h2>¡${nombreJugador}, has perdido!</h2>
+                            <p>⏱️ Tiempo: <strong>${tiempo} s</strong></p>
+                            <p>🚩 Banderas puestas: <strong>${marcas}</strong></p>
+                            <button id="btn-reintentar">Reintentar</button>`
                         setTimeout(function () {
                             alerta.classList.remove('alerta-oculta')
                             const btnReintentar = document.getElementById('btn-reintentar')
@@ -226,7 +231,7 @@ function verificarPerdedor() {
     // Mostrar las demás minas que están ocultas total ya perdio
     for (var f = 0; f < filas; f++) {
         for (var c = 0; c < columnas; c++) {
-            if (tablero[c][f].valor == -1) {
+            if (tablero[c][f].valor === -1) {
                 var celda = document.getElementById(`celda-${c}-${f}`)
                 if (tablero[c][f].estado !== "descubierto") {
                     celda.innerHTML = `<i class="fas fa-bomb"></i>`
@@ -245,10 +250,10 @@ function actualizarTablero() {
     for (var f = 0; f < filas; f++) {
         for (var c = 0; c < columnas; c++) {
             var celda = document.getElementById(`celda-${c}-${f}`)
-            if (tablero[c][f].estado == "descubierto") { // Si la celda esta descubierta
+            if (tablero[c][f].estado === "descubierto") { // Si la celda esta descubierta
                 celda.style.boxShadow = "none"
-                celda.style.background = "#cfd8dc" // Fondo gris azulado suave para celdas abiertas
-                celda.style.color = "#263238" // Texto oscuro para buena visibilidad
+                celda.style.background = "#cfd8dc"
+                celda.style.color = "#263238"
                 switch (tablero[c][f].valor) {
                     case -1: // Si es una mina
                         celda.innerHTML = `<i class="fas fa-bomb"></i>` // Muestro la mina
@@ -262,12 +267,12 @@ function actualizarTablero() {
                         break;
                 }
             }
-            if (tablero[c][f].estado == "marcado") { // Si la celda esta marcada
-                celda.innerHTML = `<i class="fas fa-flag"></i>` // Bandera Font Awesome 6+
-                celda.style.background = `cadetblue`
+            if (tablero[c][f].estado === "marcado") { // Si la celda esta marcada
+                celda.innerHTML = `<i class="fas fa-flag"></i>`
+                celda.style.background = `#38bdf8`
                 celda.style.color = "#fff"
             }
-            if (tablero[c][f].estado == undefined) { // Si la celda esta vacia
+            if (tablero[c][f].estado === undefined) { // Si la celda esta vacia
                 celda.innerHTML = ``
                 celda.style.background = ``
             }
@@ -283,14 +288,15 @@ function abrirArea(c, f) {
     for (var i = -1; i <= 1; i++) {
         for (var j = -1; j <= 1; j++) {
             if (i == 0 && j == 0) {
-                continue // Para evitar que se encierre en un bucle infinito
+                continue // Para evitar que se encierre en un bucle infinito (Se volvería a llamar / misma celda)
             }
 
-            try { // Para evitar las posiciones negativas
+            try {
                 if (tablero[c + i][f + j].estado != "descubierto") {
                     if (tablero[c + i][f + j].estado != "marcado") {
                         tablero[c + i][f + j].estado = "descubierto" // Abro las celdas circundantes
-                        if (tablero[c + i][f + j].valor == 0) { // Si la celda que se abre es otro 0, se le pasa la responsabilidad
+                        sonido_descubrir.play()
+                        if (tablero[c + i][f + j].valor === 0) { // Si la celda que se abre es otro 0, se le pasa la responsabilidad
                             abrirArea(c + i, f + j)
                         }
                     }
@@ -301,19 +307,19 @@ function abrirArea(c, f) {
     }
 }
 
-// Funcion clic derecho y izquierdo para descubrir las celdas, o marcarlas con bandera
+// Funcion clic derecho e izquierdo para descubrir las celdas, o marcarlas con bandera
 function click(c, f, me) {
     if (!jugando) {
         return
     }
 
-    if (tablero[c][f].estado == "descubierto") { // Evito que las celdas descubiertas sean redescubiertas o marcadas
+    if (tablero[c][f].estado === "descubierto") { // Evito que las celdas descubiertas sean redescubiertas o marcadas
         return
     }
 
     switch (me.button) {
         case 0: // 0 click izquierdo
-            if (tablero[c][f].estado == "marcado") { // la celda está protegida
+            if (tablero[c][f].estado === "marcado") { // la celda está protegida
                 break
             }
 
@@ -322,9 +328,10 @@ function click(c, f, me) {
             }
 
             tablero[c][f].estado = "descubierto"
+            sonido_click.play() // Reproducir sonido de click
             juegoIniciado = true // El jugador descubrio más de 1 celda
 
-            if (tablero[c][f].valor == 0) { // Si acertamos en una celda que no tenga minas alrededor, entonces hay que destapar toda el área de ceros
+            if (tablero[c][f].valor === 0) { // Si acertamos en una celda que no tenga minas alrededor, entonces hay que destapar toda el área de ceros
                 abrirArea(c, f)
             }
             break;
@@ -333,9 +340,10 @@ function click(c, f, me) {
             break;
 
         case 2: // 2 click derecho
-            if (tablero[c][f].estado == "marcado") { // Si la celda está marcada, se desmarca
+            if (tablero[c][f].estado === "marcado") { // Si la celda está marcada, se desmarca
                 tablero[c][f].estado = undefined
                 marcas--
+                sonido_bandera.play() 
             }
             else { // Si la celda no está marcada, se marca
                 if (marcas >= minas) {
@@ -343,13 +351,14 @@ function click(c, f, me) {
                 }
                 tablero[c][f].estado = "marcado"
                 marcas++
+                sonido_bandera.play() 
             }
             break;
 
         default:
             break;
     }
-    actualizarTablero() // Actualizo el tablero
+    actualizarTablero()
 }
 
 // Funcion para asignar los eventos a las celdas del tablero (click izquierdo y derecho)
@@ -484,12 +493,12 @@ document.addEventListener('DOMContentLoaded', function () {
 function guardarEnRanking(nombre, tiempo, nivel) {
     // Definir puntos base por nivel
     var puntosNivel = 0;
-    if (nivel === 'Chill') puntosNivel = 100;
-    else if (nivel === 'Peligro') puntosNivel = 200;
-    else if (nivel === 'Minado') puntosNivel = 300;
-    else if (nivel === 'Guerra') puntosNivel = 400;
-    else if (nivel === 'Infierno') puntosNivel = 500;
-    else puntosNivel = 50; // Por si acaso
+    if (nivel === 'Chill') puntosNivel = 1000;
+    else if (nivel === 'Peligro') puntosNivel = 2000;
+    else if (nivel === 'Minado') puntosNivel = 3000;
+    else if (nivel === 'Guerra') puntosNivel = 4000;
+    else if (nivel === 'Infierno') puntosNivel = 5000;
+    else puntosNivel = 500; // Por si acaso
 
     // Calcular puntos
     var puntos = puntosNivel - tiempo;

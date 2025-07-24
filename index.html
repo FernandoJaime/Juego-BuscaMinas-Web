@@ -1,176 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Busca Minas FM</title>
-        <link rel="icon" href="assets/bomb icono.ico"> <!-- Icono de la pagina -->
-        <link rel="stylesheet" href="css/reset.css">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/layout.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
-    </head>
-    <body>
-        <!-- Header -->
-        <header class="header">
-            <a href="#" class="logo">BuscaMinas FM</a>
-            <div class="header-botones">
-                <button class="control-btn" id="btn-ajustes" title="Ajustes">
-                    <i class="fas fa-cog"></i>
-                </button>
-                 <button class="control-btn" title="Ver ranking">
-                    <i class="fas fa-trophy"></i>
-                </button> 
-                <button class="control-btn" title="Cambiar tema">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="control-btn" title="Activar/Desactivar sonido">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-                <button class="control-btn" id="btn-contacto" title="Contacto">
-                    <i class="fas fa-envelope"></i>
-                </button>
-            </div>
-        </header>
 
-        <!-- Contenido principal -->
-        <main class="main-container">
-            <span id="juego-nuevo"> Juego Nuevo</span>
-            
-            <span id="marcadores">
-                <span id="minas-label">Minas:</span>
-                <span id="minas">000</span>
-                <span id="tiempo-label">Tiempo:</span>
-                <span id="timer">000</span>
-            </span>
-            
-            <table id="tablero-de-juego"></table>
-            
- 
-          <!-- Modal de ranking -->
-<div id="modal-ranking" class="modal-ranking-oculto">
-    <div class="modal-ranking-contenido">
-      <div class="modal-ranking-header">
-        <h2>Ranking</h2>
-        <button id="cerrar-modal-ranking" class="cerrar-modal-ranking">&times;</button>
-      </div>
-  <!-- Filtros de ranking -->
-      <div class="filtros-ranking">
-        <label for="filtro-selector">Ordenar por:</label>
-        <select id="filtro-selector">
-          <option value="puntaje-desc">Puntaje (mayor a menor)</option>
-          <option value="puntaje-asc">Puntaje (menor a mayor)</option>
-          <option value="fecha-desc">Fecha (más reciente)</option>
-          <option value="fecha-asc">Fecha (más antigua)</option>
-        </select>
-      </div>
-  
-      <table id="tabla-ranking">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Puntos</th>
-            <th>Tiempo</th>
-            <th>Fecha</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Inserción de filas dinámicamente -->
-        </tbody>
-      </table>
-      
-      <span id="ranking-vacio" class="ranking-vacio">Sin partidas ganadas aún.</span>
-    </div>
-  </div>
-  
-            
-            <!-- Modal de ajustes oculto -->
-            <div id="modal-ajustes" class="modal-ajustes">
-                <div class="modal-contenido">
-                    <div class="modal-header">
-                        <h2>Seleccionar dificultad</h2>
-                        <span class="cerrar-modal" id="cerrar-modal-ajustes">&times;</span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca Minas FM</title>
+    <link rel="icon" href="assets/bomb icono.ico"> <!-- Icono de la pagina -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="logo">BuscaMinas FM</a>
+        <div class="header-botones">
+            <button class="control-btn" id="btn-ajustes" title="Ajustes">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button class="control-btn" title="Ver ranking">
+                <i class="fas fa-trophy"></i>
+            </button>
+            <button class="control-btn" id="btn-sonido" title="Activar/Desactivar sonido">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="control-btn" id="btn-contacto" title="Contacto">
+                <i class="fas fa-envelope"></i>
+            </button>
+        </div>
+    </header>
+    <!-- Contenido principal -->
+    <main class="main-container">
+        <span id="juego-nuevo">Juego nuevo</span>
+        <span id="marcadores">
+            <span id="minas-label">Minas:</span>
+            <span id="minas">000</span>
+            <span id="tiempo-label">Tiempo:</span>
+            <span id="timer">000</span>
+        </span>
+        <table id="tablero-de-juego"></table>
+        <!-- Modal de ranking -->
+        <div id="modal-ranking" class="modal-ranking-oculto">
+            <div class="modal-ranking-contenido">
+                <div class="modal-ranking-header">
+                    <h2>Ranking</h2>
+                    <button id="cerrar-modal-ranking" class="cerrar-modal-ranking">&times;</button>
+                </div>
+                <!-- Filtros de ranking -->
+                <div class="filtros-ranking">
+                    <label for="filtro-selector">Ordenar por:</label>
+                    <select id="filtro-selector">
+                        <option value="puntaje-desc">Puntaje (mayor a menor)</option>
+                        <option value="puntaje-asc">Puntaje (menor a mayor)</option>
+                        <option value="fecha-desc">Fecha (más reciente)</option>
+                        <option value="fecha-asc">Fecha (más antigua)</option>
+                    </select>
+                </div>
+                <table id="tabla-ranking">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Puntos</th>
+                            <th>Tiempo</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Inserción de filas dinámicamente dependiendo de la cantidad de registros -->
+                    </tbody>
+                </table>
+                <span id="ranking-vacio" class="ranking-vacio">Sin partidas ganadas aún.</span>
+            </div>
+        </div>
+        <!-- Modal de ajustes oculto -->
+        <div id="modal-ajustes" class="modal-ajustes">
+            <div class="modal-contenido">
+                <div class="modal-header">
+                    <h2>Seleccionar dificultad</h2>
+                    <span class="cerrar-modal" id="cerrar-modal-ajustes">&times;</span>
+                </div>
+                <div class="niveles-container">
+                    <div class="nivel-opcion" id="nivel-chill">
+                        <div class="nivel-icono">😌</div>
+                        <div class="nivel-info">
+                            <h3>Nivel 1: Chill</h3>
+                            <p>8x8 - 10 minas - 1000 puntos</p>
+                        </div>
                     </div>
-                    <div class="niveles-container">
-                        <div class="nivel-opcion" id="nivel-chill">
-                            <div class="nivel-icono">😌</div>
-                            <div class="nivel-info">
-                                <h3>Nivel 1: Chill</h3>
-                                <p>8x8 - 10 minas - 100 puntos</p>
-                            </div>
+                    <div class="nivel-opcion" id="nivel-peligro">
+                        <div class="nivel-icono">⚠️</div>
+                        <div class="nivel-info">
+                            <h3>Nivel 2: Peligro</h3>
+                            <p>10x10 - 20 minas - 2000 puntos</p>
                         </div>
-                        <div class="nivel-opcion" id="nivel-peligro">
-                            <div class="nivel-icono">⚠️</div>
-                            <div class="nivel-info">
-                                <h3>Nivel 2: Peligro</h3>
-                                <p>10x10 - 20 minas - 200 puntos</p>
-                            </div>
+                    </div>
+                    <div class="nivel-opcion" id="nivel-minado">
+                        <div class="nivel-icono">💣</div>
+                        <div class="nivel-info">
+                            <h3>Nivel 3: Minado</h3>
+                            <p>12x12 - 34 minas - 3000 puntos</p>
                         </div>
-                        <div class="nivel-opcion" id="nivel-minado">
-                            <div class="nivel-icono">💣</div>
-                            <div class="nivel-info">
-                                <h3>Nivel 3: Minado</h3>
-                                <p>12x12 - 34 minas - 300 puntos</p>
-                            </div>
+                    </div>
+                    <div class="nivel-opcion" id="nivel-guerra">
+                        <div class="nivel-icono">⚔️</div>
+                        <div class="nivel-info">
+                            <h3>Nivel 4: Guerra</h3>
+                            <p>16x16 - 60 minas - 4000 puntos</p>
                         </div>
-                        <div class="nivel-opcion" id="nivel-guerra">
-                            <div class="nivel-icono">⚔️</div>
-                            <div class="nivel-info">
-                                <h3>Nivel 4: Guerra</h3>
-                                <p>16x16 - 60 minas - 400 puntos</p>
-                            </div>
-                        </div>
-                        <div class="nivel-opcion" id="nivel-infierno">
-                            <div class="nivel-icono">🔥</div>
-                            <div class="nivel-info">
-                                <h3>Nivel 5: Infierno</h3>
-                                <p>24x24 - 99 minas - 500 puntos</p>
-                            </div>
+                    </div>
+                    <div class="nivel-opcion" id="nivel-infierno">
+                        <div class="nivel-icono">🔥</div>
+                        <div class="nivel-info">
+                            <h3>Nivel 5: Infierno</h3>
+                            <p>24x24 - 99 minas - 5000 puntos</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Modal de nombre de jugador (más compacto y estilizado) -->
-            <div id="modal-nombre" class="modal-nombre modal-nombre-inicial">
-                <div class="modal-nombre-contenido">
-                    <h2 class="modal-nombre-titulo">Nombre de jugador</h2>
-                    <input id="input-nombre" type="text" minlength="3" maxlength="20" placeholder="Nombre..." class="modal-nombre-entrada">
-                    <span id="nombre-error" class="modal-nombre-error">Mínimo 3 letras.</span>
-                    <button id="btn-confirmar-nombre" class="modal-nombre-boton">Entrar</button>
-                </div>
+        </div>
+        <!-- Modal de nombre de jugador -->
+        <div id="modal-nombre" class="modal-nombre modal-nombre-inicial">
+            <div class="modal-nombre-contenido">
+                <h2 class="modal-nombre-titulo">Nombre de jugador</h2>
+                <input id="input-nombre" type="text" minlength="3" maxlength="20" placeholder="Nombre..."
+                    class="modal-nombre-entrada">
+                <span id="nombre-error" class="modal-nombre-error">Mínimo 3 letras.</span>
+                <button id="btn-confirmar-nombre" class="modal-nombre-boton">Entrar</button>
             </div>
-            <div id="alerta-perdedor" class="alerta-centrada alerta-oculta">
-                <div class="alerta-contenido">
-                    <h2>¡Has perdido!</h2>
-                    <button id="btn-reintentar">Reintentar</button>
-                </div>
+        </div>
+        <!-- Alerta perdedor o ganador dinámica (Remueve perdedor / ganador) -->
+        <div id="alerta-perdedor" class="alerta-centrada alerta-oculta">
+            <div class="alerta-contenido">
+                <h2>¡Has perdido!</h2>
+                <button id="btn-reintentar">Reintentar</button>
             </div>
-        </main>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="copyright">
+            © 2025 BuscaMinas FM. Todos los derechos reservados.
+        </div>
+        <div class="footer-links">
+            <a href="https://github.com/FernandoJaime/Juego-BuscaMinas-Web" class="footer-link" target="_blank">
+                <i class="fab fa-github"></i>
+                Repositorio
+            </a>
+            <a href="https://github.com/FernandoJaime" class="footer-link" target="_blank">
+                <i class="fab fa-github"></i>
+                FernandoJaime
+            </a>
+            <a href="https://github.com/LodatoMarcos2am" class="footer-link" target="_blank">
+                <i class="fab fa-github"></i>
+                MarcosLodato
+            </a>
+        </div>
+    </footer>
+    <script src="./javascript/juego.js"></script>
+    <script src="./javascript/general.js"></script>
+</body>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="copyright">
-                © 2025 BuscaMinas FM. Todos los derechos reservados.
-            </div>
-            <div class="footer-links">
-                <a href="https://github.com/FernandoJaime/Juego-BuscaMinas-Web" class="footer-link" target="_blank">
-                    <i class="fab fa-github"></i>
-                    Repositorio
-                </a>
-                <a href="https://github.com/FernandoJaime" class="footer-link" target="_blank">
-                    <i class="fab fa-github"></i>
-                    FernandoJaime
-                </a>
-                <a href="https://github.com/LodatoMarcos2am" class="footer-link" target="_blank">
-                    <i class="fab fa-github"></i>
-                    MarcosLodato
-                </a>
-            </div>
-        </footer>
-
-        <script src="./javascript/juego.js"></script>
-        <script src="./javascript/general.js"></script>
-    </body>
 </html>
