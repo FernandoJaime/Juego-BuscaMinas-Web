@@ -1,5 +1,5 @@
 "use strict";
-let sonidoActivado = true; 
+var sonidoActivado = true; 
 
 // Funcion para mostrar el modal de ajustes
 function mostrarAjustes() {
@@ -10,12 +10,13 @@ function mostrarAjustes() {
 function silenciarSonido() {
     sonidoActivado = !sonidoActivado;
 
-    // Silencia todos los elementos de audio y video
-    const elementosMedia = document.querySelectorAll('audio, video');
-    elementosMedia.forEach(el => el.muted = !sonidoActivado);
-
     const btn = document.getElementById('btn-sonido');
     const icono = btn.querySelector('i');
+
+    // Mutea o desmutea todos los audios y videos
+    document.querySelectorAll('audio, video').forEach(el => {
+        el.muted = !sonidoActivado;
+    });
 
     if (sonidoActivado) {
         icono.classList.remove('fa-volume-mute');
@@ -32,7 +33,7 @@ document.getElementById('btn-ajustes').addEventListener('click', mostrarAjustes)
 document.getElementById('btn-contacto').addEventListener('click', function () {
   window.location.href = 'contacto.html'
 })
-document.getElementById('btn-sonido').addEventListener('click', silenciarSonido());
+document.getElementById('btn-sonido').addEventListener('click', silenciarSonido);
 
 //Tratamos las fechas como date
 function parseFecha(fechaStr) {

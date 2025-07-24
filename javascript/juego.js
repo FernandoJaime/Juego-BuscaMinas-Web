@@ -13,11 +13,11 @@ var tablero = []
 var nombreJugador = ''
 
 // Variables de sonidos
-let sonido_click = new Audio("assets/sonido_click.mp3")
-let sonido_descubrir = new Audio("assets/sonido_descubrir.mp3")
-let sonido_perdedor = new Audio("assets/sonido_perdedor.mp3")
-let sonido_ganador = new Audio("assets/sonido_ganador.mp3")
-let sonido_bandera = new Audio("assets/sonido_bandera.mp3")
+var sonido_click = new Audio("assets/sonido_click.mp3")
+var sonido_descubrir = new Audio("assets/sonido_descubrir.mp3")
+var sonido_perdedor = new Audio("assets/sonido_perdedor.mp3")
+var sonido_ganador = new Audio("assets/sonido_ganador.mp3")
+var sonido_bandera = new Audio("assets/sonido_bandera.mp3")
 
 function jugar() {
     reiniciarVariables()
@@ -164,7 +164,7 @@ function verificarGanador() {
         var tableroHTML = document.getElementById("tablero-de-juego");
         tableroHTML.style.background = "#2ecc71";
         jugando = false;
-        sonido_ganador.play();
+        if (sonidoActivado) sonido_ganador.play();
         if (timer) clearInterval(timer);
         guardarEnRanking(nombreJugador, segundos, obtenerNombreNivel());
         var alerta = document.getElementById('alerta-perdedor');
@@ -198,7 +198,7 @@ function verificarPerdedor() {
                     var tableroHTML = document.getElementById("tablero-de-juego")
                     tableroHTML.style.background = "red"
                     jugando = false
-                    sonido_perdedor.play()
+                    if (sonidoActivado) sonido_perdedor.play()
                     if (timer) clearInterval(timer)
                     const alerta = document.getElementById('alerta-perdedor')
                     if (alerta) {
@@ -295,7 +295,7 @@ function abrirArea(c, f) {
                 if (tablero[c + i][f + j].estado != "descubierto") {
                     if (tablero[c + i][f + j].estado != "marcado") {
                         tablero[c + i][f + j].estado = "descubierto" // Abro las celdas circundantes
-                        sonido_descubrir.play()
+                        if (sonidoActivado) sonido_descubrir.play();
                         if (tablero[c + i][f + j].valor === 0) { // Si la celda que se abre es otro 0, se le pasa la responsabilidad
                             abrirArea(c + i, f + j)
                         }
@@ -328,7 +328,7 @@ function click(c, f, me) {
             }
 
             tablero[c][f].estado = "descubierto"
-            sonido_click.play() // Reproducir sonido de click
+            if (sonidoActivado) sonido_click.play(); // Reproducir sonido de click
             juegoIniciado = true // El jugador descubrio más de 1 celda
 
             if (tablero[c][f].valor === 0) { // Si acertamos en una celda que no tenga minas alrededor, entonces hay que destapar toda el área de ceros
@@ -343,7 +343,7 @@ function click(c, f, me) {
             if (tablero[c][f].estado === "marcado") { // Si la celda está marcada, se desmarca
                 tablero[c][f].estado = undefined
                 marcas--
-                sonido_bandera.play() 
+                if (sonidoActivado) sonido_bandera.play(); 
             }
             else { // Si la celda no está marcada, se marca
                 if (marcas >= minas) {
@@ -351,7 +351,7 @@ function click(c, f, me) {
                 }
                 tablero[c][f].estado = "marcado"
                 marcas++
-                sonido_bandera.play() 
+                if (sonidoActivado) sonido_bandera.play(); 
             }
             break;
 
