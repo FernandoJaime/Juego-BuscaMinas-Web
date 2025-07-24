@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contacto - BuscaMinas FM</title>
+        <link rel="icon" href="assets/bomb icono.ico">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/layout.css">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/contacto.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
+
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <a href="index.html" class="logo">BuscaMinas FM</a>
+            <div class="header-botones">
+                <button class="control-btn" id="btn-volver-contacto" title="Volver">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-container">
+            <h1>Contacto</h1>
+            <form id="form-contacto">
+                <div>
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" name="nombre">
+                    <div class="error-msg" id="error-nombre"></div>
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input id="email" name="email">
+                    <div class="error-msg" id="error-email"></div>
+                </div>
+                <div>
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje"></textarea>
+                    <div class="error-msg" id="error-mensaje"></div>
+                </div>
+                <button type="submit" id="btn-enviar-contacto">Enviar</button>
+            </form>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="copyright">
+                © 2025 BuscaMinas FM. Todos los derechos reservados.
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/FernandoJaime/Juego-BuscaMinas-Web" class="footer-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                    Repositorio
+                </a>
+                <a href="https://github.com/FernandoJaime" class="footer-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                    FernandoJaime
+                </a>
+                <a href="https://github.com/LodatoMarcos2am" class="footer-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                    MarcosLodato
+                </a>
+            </div>
+        </footer>
+
+        <script src="./javascript/contacto.js"></script>
+    </body>
+</html>
