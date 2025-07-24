@@ -4,20 +4,16 @@
 document.getElementById('btn-volver-contacto').addEventListener('click', function () {
     window.location.href = 'index.html'
 })
-
 function validarNombre(nombre) {
-    return nombre.length >= 3 && !/\d/.test(nombre);
+    return nombre.length >= 3 && !/\d/.test(nombre); //No haya nombres con números
 }
-
 function validarEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //Chequemos mail válido
     return regex.test(email);
 }
-
 function validarDescripcion(descripcion) {
     return descripcion.trim().length >= 5;
 }
-
 document.getElementById('form-contacto').addEventListener('submit', function (e) {
     e.preventDefault(); // Evita que el formulario se envíe
 
@@ -55,7 +51,6 @@ document.getElementById('form-contacto').addEventListener('submit', function (e)
             esValido = false;
         }
     }
-    
     if (esValido) {
         const asunto = encodeURIComponent(`Contacto desde BuscaMinas FM - ${nombre}`);
         const cuerpo = encodeURIComponent(`${mensaje}\n\n ${email}\nSaludos cordiales!\n${nombre}`);
