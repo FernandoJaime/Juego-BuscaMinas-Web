@@ -607,3 +607,74 @@ td:hover {
   border-color: #38bdf8;
   box-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
 }
+/* Responsive para modal de ranking */
+@media (max-width: 600px) {
+  .modal-ranking-contenido {
+    padding: 24px 18px;
+    min-width: 90vw;
+    max-height: 90vh;
+    border-radius: 14px;
+  }
+
+  .modal-ranking-header h2 {
+    font-size: 1.5em;
+  }
+
+  .cerrar-modal-ranking {
+    font-size: 24px;
+    top: 12px;
+    right: 16px;
+  }
+
+  .filtros-ranking {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 14px;
+  }
+
+  .filtros-ranking label {
+    font-size: 1em;
+    margin-bottom: 4px;
+  }
+
+  .filtros-ranking select {
+    width: 100%;
+  }
+
+  #tabla-ranking {
+    font-size: 0.9em;
+  }
+
+  #tabla-ranking th,
+  #tabla-ranking td {
+    padding: 6px 8px;
+  }
+
+  .ranking-vacio {
+    font-size: 1em;
+  }
+}
+.tabla-ranking-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+#tabla-ranking {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px; 
+}
+
+#tabla-ranking th,
+#tabla-ranking td {
+  text-align: center;
+  padding: 10px;
+  white-space: nowrap; 
+}
+
+@media (max-width: 600px) {
+  #tabla-ranking {
+    font-size: 0.9em;
+  }
+}
