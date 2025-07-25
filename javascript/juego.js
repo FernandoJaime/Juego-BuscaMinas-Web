@@ -364,6 +364,8 @@ function click(c, f, me) {
 // Funcion para asignar los eventos a las celdas del tablero (click izquierdo y derecho)
 function asignarEventos(c, f) {
     var celda = document.getElementById(`celda-${c}-${f}`)
+    var touchTimer
+    var longPressTriggered = false
 
     celda.addEventListener("mouseup", function (me) {
         click(c, f, me)
@@ -371,6 +373,38 @@ function asignarEventos(c, f) {
 
     celda.addEventListener("contextmenu", function (e) {
         e.preventDefault()
+    })
+ 
+    celda.addEventListener("touchstart", function (e) {
+        e.preventDefault()
+        longPressTriggered = false
+
+        touchTimer = setTimeout(function () {
+            longPressTriggered = true
+            const fakeEvent = {
+                button: 2 
+            }
+            click(c, f, fakeEvent)
+        }, 300) 
+    })
+    
+    celda.addEventListener("touchend", function (e) {
+        clearTimeout(touchTimer)
+
+        if (!longPressTriggered) {
+            const fakeEvent = {
+                button: 0 
+            }
+            click(c, f, fakeEvent)
+        }
+
+        if (longPressTriggered) {
+            e.preventDefault()
+        }
+    })
+
+    celda.addEventListener("touchmove", function (e) {
+        clearTimeout(touchTimer)
     })
 }
 

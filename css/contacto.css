@@ -1,6 +1,6 @@
 .main-container h1 {
   color: #38bdf8;
-  margin-bottom: 1.2em;
+  margin-bottom: 0.5em;
   font-size: 2rem;
   letter-spacing: 1px;
 }
@@ -59,16 +59,6 @@
 #btn-enviar-contacto:hover {
   background: #0ea5e9;
 }
-#contacto-exito {
-  padding: 1em;
-  border-radius: 8px;
-  margin: 1em 0;
-  background: #10b981;
-  color: #fff;
-  text-align: center;
-  font-size: 1.1em;
-  letter-spacing: 0.5px;
-}
 
 /* Alerta de error */
 .error-msg {
@@ -84,5 +74,9 @@
   #form-contacto {
     max-width: 98vw;
     padding: 1.2em 0.7em;
+  }
+  .main-container h1 {
+    font-size: 1.8rem;
+    margin-top: 2em;
   }
 } 
