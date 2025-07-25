@@ -16,7 +16,7 @@ Un juego clasico de buscaminas con un estilo visual moderno, atractivo y efectos
 1. Abrí el archivo `index.html` en tu navegador.
 2. `Seleccioná un nivel` de dificultad.
 3. Hacé `click izquierdo` sobre las celdas para revelarlas.
-4. Hacé `click derecho` para marcar o desmarcar minas.
+4. Hacé `click derecho` para marcar o desmarcar minas (mantener apretado en caso de touchscreens).
 5. `Evitá las minas` y descubrí todas las celdas seguras para ganar.
 
 ## 🛠️ Tecnologías utilizadas
