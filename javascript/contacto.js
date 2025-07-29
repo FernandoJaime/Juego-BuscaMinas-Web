@@ -29,7 +29,7 @@ document.getElementById('form-contacto').addEventListener('submit', function (e)
     errorEmail.textContent = '';
     errorMensaje.textContent = '';
 
-    let esValido = true;
+    var esValido = true;
 
     if (!nombre || !email || !mensaje) {
         errorMensaje.textContent = 'Hay campos vacios';
