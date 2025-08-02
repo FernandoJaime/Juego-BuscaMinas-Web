@@ -133,13 +133,12 @@ function eventos() {
         }
     }
 }
+
 //Lógica para obtener el nombre del nivel
 function obtenerNombreNivel() {
     if (filas === 8 && columnas === 8 && minas === 10) return 'Chill';
     if (filas === 10 && columnas === 10 && minas === 20) return 'Peligro';
     if (filas === 12 && columnas === 12 && minas === 34) return 'Minado';
-    if (filas === 16 && columnas === 16 && minas === 60) return 'Guerra';
-    if (filas === 24 && columnas === 24 && minas === 99) return 'Infierno';
     return 'Personalizado';
 }
 
@@ -343,7 +342,7 @@ function click(c, f, me) {
             if (tablero[c][f].estado === "marcado") { // Si la celda está marcada, se desmarca
                 tablero[c][f].estado = undefined
                 marcas--
-                if (sonidoActivado) sonido_bandera.play(); 
+                if (sonidoActivado) sonido_bandera.play();
             }
             else { // Si la celda no está marcada, se marca
                 if (marcas >= minas) {
@@ -351,7 +350,7 @@ function click(c, f, me) {
                 }
                 tablero[c][f].estado = "marcado"
                 marcas++
-                if (sonidoActivado) sonido_bandera.play(); 
+                if (sonidoActivado) sonido_bandera.play();
             }
             break;
 
@@ -374,7 +373,7 @@ function asignarEventos(c, f) {
     celda.addEventListener("contextmenu", function (e) {
         e.preventDefault()
     })
- 
+
     celda.addEventListener("touchstart", function (e) {
         e.preventDefault()
         longPressTriggered = false
@@ -382,18 +381,18 @@ function asignarEventos(c, f) {
         touchTimer = setTimeout(function () {
             longPressTriggered = true
             const fakeEvent = {
-                button: 2 
+                button: 2
             }
             click(c, f, fakeEvent)
-        }, 300) 
+        }, 300)
     })
-    
+
     celda.addEventListener("touchend", function (e) {
         clearTimeout(touchTimer)
 
         if (!longPressTriggered) {
             const fakeEvent = {
-                button: 0 
+                button: 0
             }
             click(c, f, fakeEvent)
         }
@@ -426,16 +425,6 @@ function seleccionarNivel(nivel) {
             columnas = 12
             minas = 34
             break
-        case 'guerra':
-            filas = 16
-            columnas = 16
-            minas = 60
-            break
-        case 'infierno':
-            filas = 24
-            columnas = 24
-            minas = 99
-            break
     }
     ocultarAjustes()
     jugar()
@@ -459,17 +448,13 @@ window.onclick = function (event) {
 document.getElementById('nivel-chill').addEventListener('click', function () {
     seleccionarNivel('chill')
 });
+
 document.getElementById('nivel-peligro').addEventListener('click', function () {
     seleccionarNivel('peligro')
 });
+
 document.getElementById('nivel-minado').addEventListener('click', function () {
     seleccionarNivel('minado')
-});
-document.getElementById('nivel-guerra').addEventListener('click', function () {
-    seleccionarNivel('guerra')
-});
-document.getElementById('nivel-infierno').addEventListener('click', function () {
-    seleccionarNivel('infierno')
 });
 
 // Lógica para el modal de nombre
@@ -530,8 +515,6 @@ function guardarEnRanking(nombre, tiempo, nivel) {
     if (nivel === 'Chill') puntosNivel = 1000;
     else if (nivel === 'Peligro') puntosNivel = 2000;
     else if (nivel === 'Minado') puntosNivel = 3000;
-    else if (nivel === 'Guerra') puntosNivel = 4000;
-    else if (nivel === 'Infierno') puntosNivel = 5000;
     else puntosNivel = 500; // Por si acaso
 
     // Calcular puntos

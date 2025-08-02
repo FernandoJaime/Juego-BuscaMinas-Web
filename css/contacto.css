@@ -17,12 +17,14 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
   background: #1e293b;
 }
+
 #form-contacto label {
   color: #e2e8f0;
   margin-bottom: 0.3em;
   font-weight: 500;
   letter-spacing: 0.5px;
 }
+
 #form-contacto input,
 #form-contacto textarea {
   width: 100%;
@@ -35,6 +37,7 @@
   transition: border 0.2s, box-shadow 0.2s;
   resize: none;
 }
+
 #form-contacto input:focus,
 #form-contacto textarea:focus {
   border: 1.5px solid #38bdf8;
@@ -56,6 +59,7 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 #btn-enviar-contacto:hover {
   background: #0ea5e9;
 }
@@ -70,11 +74,13 @@
   letter-spacing: 0.2px;
   transition: color 0.2s;
 }
+
 @media (max-width: 600px) {
   #form-contacto {
     max-width: 98vw;
     padding: 1.2em 0.7em;
   }
+  
   .main-container h1 {
     font-size: 1.8rem;
     margin-top: 2em;

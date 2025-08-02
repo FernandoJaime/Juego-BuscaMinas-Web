@@ -78,7 +78,8 @@ td:hover {
   font-weight: bold;
   letter-spacing: 2px;
 }
- /* Estilo timer tiempo de juego */
+
+/* Estilo timer tiempo de juego */
 #timer {
   background: #1e293b;
   color: #38bdf8;
@@ -608,6 +609,7 @@ td:hover {
   border-color: #38bdf8;
   box-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
 }
+
 /* Responsive para modal de ranking */
 @media (max-width: 600px) {
   .modal-ranking-contenido {
@@ -656,6 +658,7 @@ td:hover {
     font-size: 1em;
   }
 }
+
 .tabla-ranking-wrapper {
   width: 100%;
   overflow-x: auto;

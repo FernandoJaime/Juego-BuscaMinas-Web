@@ -1,34 +1,38 @@
 /* Estilos para el header y footer */
 .header {
-    display: flex;
-    position: fixed;
-    justify-content: space-between;
-    align-items: center;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 15px 30px;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-    border-bottom: 1px solid #334155;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 15px 30px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid #334155;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
+
 .logo {
-    color: #e2e8f0;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
+
 .logo:hover {
-    color: #38bdf8;
+  color: #38bdf8;
 }
+
 .header-botones {
   display: flex;
   align-items: center;
   gap: 15px;
 }
+
 .control-btn {
   display: flex;
   align-items: center;
@@ -44,6 +48,7 @@
   font-size: 1.1rem;
   transition: all 0.3s ease;
 }
+
 .control-btn:hover {
   background: #475569;
   border-color: #38bdf8;
@@ -51,6 +56,7 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
 /* Contenedor principal para ajustar el contenido con header */
 .main-container {
   display: flex;
@@ -60,6 +66,7 @@
   margin-top: 80px;
   min-height: calc(100vh - 160px);
 }
+
 /* Footer */
 .footer {
   display: flex;
@@ -75,16 +82,19 @@
   border-top: 1px solid #334155;
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 }
+
 .copyright {
   color: #94a3b8;
   font-size: 0.9rem;
   font-weight: 400;
 }
+
 .footer-links {
   display: flex;
   align-items: center;
   gap: 20px;
 }
+
 .footer-link {
   display: flex;
   align-items: center;
@@ -95,13 +105,16 @@
   font-weight: 500;
   transition: all 0.3s ease;
 }
+
 .footer-link:hover {
   color: #38bdf8;
   transform: translateY(-1px);
 }
+
 .footer-link i {
   font-size: 1rem;
 }
+
 /* Responsive design */
 @media (max-width: 768px) {
   .header {
@@ -148,25 +161,30 @@
     min-height: calc(100vh - 140px);
   }
 }
+
 @media (max-width: 480px) {
   .header {
     display: flex;
     gap: 6px;
     padding: 10px 8px;
   }
+
   .logo {
     font-size: 1.1rem;
   }
+
   .header-botones {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
+
   .control-btn {
     min-width: 35px;
     height: 35px;
     font-size: 0.9rem;
   }
+  
   .footer-links {
     display: flex;
     flex-direction: column;

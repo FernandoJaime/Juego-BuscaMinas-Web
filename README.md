@@ -6,7 +6,7 @@ Un juego clasico de buscaminas con un estilo visual moderno, atractivo y efectos
 ## 📟 Funcionalidades
 
 - **Efectos sonoros**: Al perder, ganar, cliquear obtendras distintos sonidos.
-- **Cinco niveles**: Cada nivel tiene su puntaje y a este se le descontara los segundos que tardaste en ganar.
+- **Tres niveles**: Cada nivel tiene su puntaje y a este se le descontara los segundos que tardaste en ganar.
 - **Múltiples dificultades**: Cada dificultad aumenta el tamaño de la tabla y cantidad de bombas.
 - **Sistema de Ranking**: Guarda y consulta los distintos puntajes de forma local. 
 - **Diseño Responsivo**: Totalmente adaptable a dispositivos móviles y accesible para todos.

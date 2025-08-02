@@ -4,16 +4,20 @@
 document.getElementById('btn-volver-contacto').addEventListener('click', function () {
     window.location.href = 'index.html'
 })
+
 function validarNombre(nombre) {
     return nombre.length >= 3 && !/\d/.test(nombre); //No haya nombres con números
 }
+
 function validarEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //Chequemos mail válido
     return regex.test(email);
 }
+
 function validarDescripcion(descripcion) {
     return descripcion.trim().length >= 5;
 }
+
 document.getElementById('form-contacto').addEventListener('submit', function (e) {
     e.preventDefault(); // Evita que el formulario se envíe
 
@@ -24,7 +28,7 @@ document.getElementById('form-contacto').addEventListener('submit', function (e)
     const errorNombre = document.getElementById('error-nombre');
     const errorEmail = document.getElementById('error-email');
     const errorMensaje = document.getElementById('error-mensaje');
-    
+
     errorNombre.textContent = '';
     errorEmail.textContent = '';
     errorMensaje.textContent = '';
@@ -40,12 +44,12 @@ document.getElementById('form-contacto').addEventListener('submit', function (e)
             errorNombre.textContent = 'Al menos 3 letras y sin numeros';
             esValido = false;
         }
-    
+
         if (!validarEmail(email)) {
             errorEmail.textContent = 'Email invalido';
             esValido = false;
         }
-    
+
         if (!validarDescripcion(mensaje)) {
             errorMensaje.textContent = 'Al menos 5 caracteres';
             esValido = false;
